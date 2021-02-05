@@ -1,14 +1,21 @@
+.DS_Store
+
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
 # Compiled class file
 *.class
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
 # Log file
 *.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="SbtLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/../../archive/marketing-profile" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../archive/sprcom-alerts/services/alerts-ui" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../test-tasks/services/watermark-scala" value="PREVIEW" />
+        <entry key="$USER_HOME$/work/projects/open-source/kafka-manager" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="ScalaSbtSettings">
+    <option name="customVMPath" />
+  </component>
+</project>
