@@ -2,15 +2,11 @@ plugins {
     id 'application'
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     testImplementation 'junit:junit:4.13'
 
     implementation 'org.apache.kafka:kafka-clients:2.7.0'
-    compile project('metric-commons')
+    implementation project(':metric-commons')
 }
 
 application {

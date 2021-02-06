@@ -1,0 +1,3 @@
+include ':metric-commons'
+include ':metric-consumer'
+include ':metric-producer'
