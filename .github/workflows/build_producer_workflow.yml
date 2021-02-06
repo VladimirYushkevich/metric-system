@@ -1,0 +1,27 @@
+# The workflow to release docker container for producer.
+# It triggers after pushing changes either in commons or in producer
+name: Master checks
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'metric-commons/**'
+      - 'metric-producer/**'
+
+jobs:
+  build:
+    name: Build Producer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build with Gradle
+        run: ./gradlew metric-producer:build
