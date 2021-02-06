@@ -1,6 +1,6 @@
 # The workflow to release docker container for producer.
 # It triggers after pushing changes either in commons or in producer
-name: Master checks
+name: Master checks for Producer
 
 on:
   push:
