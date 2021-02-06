@@ -5,7 +5,7 @@ name: Master checks for Producer
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'metric-commons/**'
       - 'metric-producer/**'
