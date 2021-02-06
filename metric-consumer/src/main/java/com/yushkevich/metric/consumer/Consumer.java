@@ -1,5 +1,6 @@
 package com.yushkevich.metric.consumer;
 
+import com.yushkevich.metrics.commons.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

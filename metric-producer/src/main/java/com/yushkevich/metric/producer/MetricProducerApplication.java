@@ -1,5 +1,7 @@
 package com.yushkevich.metric.producer;
 
+import com.yushkevich.metrics.commons.KafkaProperties;
+
 import java.util.concurrent.TimeoutException;
 
 public class MetricProducerApplication {

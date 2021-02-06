@@ -1,6 +1,6 @@
-package com.yushkevich.metric.producer;
+package com.yushkevich.metrics.commons;
 
-public class KafkaProperties {
+public final class KafkaProperties {
 
     public static final String TOPIC = "test";
     public static final String KAFKA_SERVER_URL = "localhost";

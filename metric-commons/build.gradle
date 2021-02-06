@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+group 'com.yushkevich.metrics.common'
+version '0.0.1'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+}

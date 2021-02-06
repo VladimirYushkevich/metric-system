@@ -1,5 +1,6 @@
 package com.yushkevich.metric.producer;
 
+import com.yushkevich.metrics.commons.KafkaProperties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -35,7 +36,6 @@ public class Producer extends Thread {
         int recordsSent = 0;
         while (recordsSent < numRecords) {
             String messageStr = "Message_" + messageKey;
-            long startTime = System.currentTimeMillis();
             // Send synchronously
             try {
                 producer.send(new ProducerRecord<>(topic,

@@ -1,5 +1,7 @@
 package com.yushkevich.metric.consumer;
 
+import com.yushkevich.metrics.commons.KafkaProperties;
+
 import java.util.Optional;
 
 public class MetricConsumerApplication {
