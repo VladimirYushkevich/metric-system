@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class Consumer extends Thread {
+
     private final KafkaConsumer<Integer, String> consumer;
     private final String topic;
     private final String groupId;
