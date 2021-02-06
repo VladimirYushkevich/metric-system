@@ -1,6 +1,6 @@
 package com.yushkevich.metric.consumer;
 
-import com.yushkevich.metrics.commons.KafkaProperties;
+import com.yushkevich.metrics.commons.properties.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -19,14 +19,14 @@ public class Consumer extends Thread {
     private final int numMessageToConsume;
     private int messageRemaining;
 
-    public Consumer(final String topic,
+    public Consumer(final KafkaProperties kafkaProperties,
                     final String groupId,
                     final Optional<String> instanceId,
                     final boolean readCommitted,
                     final int numMessageToConsume) {
         this.groupId = groupId;
         Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaProperties.KAFKA_SERVER_URL + ":" + KafkaProperties.KAFKA_SERVER_PORT);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.serverUrl + ":" + kafkaProperties.port);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         instanceId.ifPresent(id -> props.put(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, id));
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
@@ -40,7 +40,7 @@ public class Consumer extends Thread {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         consumer = new KafkaConsumer<>(props);
-        this.topic = topic;
+        this.topic = kafkaProperties.topic;
         this.numMessageToConsume = numMessageToConsume;
         this.messageRemaining = numMessageToConsume;
     }

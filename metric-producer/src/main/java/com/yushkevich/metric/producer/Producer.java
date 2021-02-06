@@ -1,6 +1,6 @@
 package com.yushkevich.metric.producer;
 
-import com.yushkevich.metrics.commons.KafkaProperties;
+import com.yushkevich.metrics.commons.properties.KafkaProperties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -16,17 +16,16 @@ public class Producer extends Thread {
     private final String topic;
     private final int numRecords;
 
-    public Producer(final String topic,
+    public Producer(final KafkaProperties kafkaProperties,
                     final int numRecords) {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                KafkaProperties.KAFKA_SERVER_URL + ":" + KafkaProperties.KAFKA_SERVER_PORT);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.serverUrl + ":" + kafkaProperties.port);
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "MetricProducer");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         producer = new KafkaProducer<>(props);
-        this.topic = topic;
+        this.topic = kafkaProperties.topic;
         this.numRecords = numRecords;
     }
 

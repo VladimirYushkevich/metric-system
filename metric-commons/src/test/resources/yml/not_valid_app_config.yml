@@ -1,0 +1,5 @@
+kafka:
+  topic: topic
+  bootstrap-server-url: url
+  bootstrap-server-port: 123
+  not-existing-property: fail

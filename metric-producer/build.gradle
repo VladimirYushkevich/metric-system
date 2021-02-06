@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13'
-
     implementation 'org.apache.kafka:kafka-clients:2.7.0'
     implementation project(':metric-commons')
 }
