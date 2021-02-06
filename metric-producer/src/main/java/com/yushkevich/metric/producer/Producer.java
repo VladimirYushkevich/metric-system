@@ -11,7 +11,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 public class Producer extends Thread {
-
+    //check producer
     private final KafkaProducer<Integer, String> producer;
     private final String topic;
     private final int numRecords;
