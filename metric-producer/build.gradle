@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.apache.kafka:kafka-clients:2.7.0'
+    implementation 'com.github.oshi:oshi-core:5.4.1'
     implementation project(':metric-commons')
 }
 

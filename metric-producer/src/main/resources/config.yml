@@ -1,4 +1,4 @@
 kafka:
-  topic: test
+  topic: json
   bootstrap-server-url: localhost
   bootstrap-server-port: 9092

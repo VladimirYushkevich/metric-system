@@ -1,4 +1,4 @@
-package com.yushkevich.metrics.commons.properties;
+package com.yushkevich.metrics.commons.config;
 
 import org.junit.jupiter.api.Test;
 

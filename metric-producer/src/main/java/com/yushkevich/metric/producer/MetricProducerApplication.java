@@ -1,13 +1,13 @@
 package com.yushkevich.metric.producer;
 
-import com.yushkevich.metrics.commons.properties.ApplicationConfig;
-import com.yushkevich.metrics.commons.properties.ConfigParser;
+import com.yushkevich.metrics.commons.config.ApplicationConfig;
+import com.yushkevich.metrics.commons.config.ConfigParser;
 
 public class MetricProducerApplication {
     public static void main(String[] args) {
-        var appConfig = new ConfigParser().readProperties("config.yml",
-                ApplicationConfig.class);
-        var producerThread = new Producer(appConfig.kafkaProperties, 100);
+        var appConfig = new ConfigParser().readProperties("config.yml", ApplicationConfig.class);
+        var reporter = new Reporter();
+        var producerThread = new Producer(appConfig.kafkaProperties, reporter);
         producerThread.start();
     }
 }

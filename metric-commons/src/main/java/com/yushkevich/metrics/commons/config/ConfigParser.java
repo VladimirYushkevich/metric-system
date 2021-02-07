@@ -1,4 +1,4 @@
-package com.yushkevich.metrics.commons.properties;
+package com.yushkevich.metrics.commons.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
