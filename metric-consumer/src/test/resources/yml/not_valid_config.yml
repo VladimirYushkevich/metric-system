@@ -1,0 +1,10 @@
+kafka:
+  topic: topic
+  bootstrap-server-url: url
+  bootstrap-server-port: 123
+jdbc:
+  driver-class: driver-class
+  jdbc-url: jdbc-url
+  user: user
+  password: password
+  not-existing-property: fail

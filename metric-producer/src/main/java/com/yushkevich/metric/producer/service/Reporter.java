@@ -1,4 +1,4 @@
-package com.yushkevich.metric.producer;
+package com.yushkevich.metric.producer.service;
 
 import com.yushkevich.metrics.commons.message.OSMetric;
 import oshi.SystemInfo;
@@ -32,7 +32,7 @@ public class Reporter {
                 .withDescription("Free amount of memory in percents")
                 .withName("free_memory_pct")
                 .withValue((double) memory.getAvailable() * 100 / memory.getTotal())
-                .withTime(LocalDateTime.now())
+                .withCreatedAt(LocalDateTime.now())
                 .build();
 
         double cpuLoad = cpu.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
@@ -41,7 +41,7 @@ public class Reporter {
                 .withDescription("CPU load")
                 .withName("cpu_load_pct")
                 .withValue(cpuLoad)
-                .withTime(LocalDateTime.now())
+                .withCreatedAt(LocalDateTime.now())
                 .build();
 
         var freeDiscSpacePct = os.getFileSystem().getFileStores().stream()
@@ -49,10 +49,9 @@ public class Reporter {
                         .withDescription(String.format("Free amount of disc space on volume (%s) in percents", fs.getName()))
                         .withName("free_disc_space_pct")
                         .withValue((double) fs.getUsableSpace() * 100 / fs.getTotalSpace())
-                        .withTime(LocalDateTime.now())
+                        .withCreatedAt(LocalDateTime.now())
                         .build());
 
-//        return Stream.concat(Stream.of(freeMemoryPct, cpuLoadPct), freeDiscSpacePct);
-        return Stream.of(cpuLoadPct);
+        return Stream.concat(Stream.of(freeMemoryPct, cpuLoadPct), freeDiscSpacePct);
     }
 }

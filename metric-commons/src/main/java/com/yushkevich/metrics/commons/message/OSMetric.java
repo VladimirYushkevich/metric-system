@@ -7,7 +7,7 @@ public class OSMetric {
     private String description;
     private String name;
     private Double value;
-    private LocalDateTime time;
+    private LocalDateTime createdAt;
 
     public String getDescription() {
         return description;
@@ -21,8 +21,8 @@ public class OSMetric {
         return value;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public void setDescription(String description) {
@@ -41,8 +41,8 @@ public class OSMetric {
         this.value = value;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public class Builder {
@@ -68,8 +68,8 @@ public class OSMetric {
             return this;
         }
 
-        public Builder withTime(LocalDateTime time) {
-            OSMetric.this.time = time;
+        public Builder withCreatedAt(LocalDateTime createdAt) {
+            OSMetric.this.createdAt = createdAt;
 
             return this;
         }
@@ -88,12 +88,12 @@ public class OSMetric {
         return description.equals(osMetric.description) &&
                 name.equals(osMetric.name) &&
                 value.equals(osMetric.value) &&
-                time.equals(osMetric.time);
+                createdAt.equals(osMetric.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, name, value, time);
+        return Objects.hash(description, name, value, createdAt);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class OSMetric {
                 "description='" + description + '\'' +
                 ", name='" + name + '\'' +
                 ", value=" + value +
-                ", time=" + time +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

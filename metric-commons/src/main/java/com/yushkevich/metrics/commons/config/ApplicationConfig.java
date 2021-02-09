@@ -4,5 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ApplicationConfig {
     @JsonProperty("kafka")
-    public KafkaProperties kafkaProperties;
+    private KafkaProperties kafkaProperties;
+
+    public KafkaProperties getKafkaProperties() {
+        return kafkaProperties;
+    }
 }

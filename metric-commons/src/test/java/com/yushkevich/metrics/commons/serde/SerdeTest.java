@@ -20,7 +20,7 @@ public class SerdeTest {
                 .withDescription("description")
                 .withName("name")
                 .withValue(1.0d)
-                .withTime(LocalDateTime.now())
+                .withCreatedAt(LocalDateTime.now())
                 .build();
     }
 

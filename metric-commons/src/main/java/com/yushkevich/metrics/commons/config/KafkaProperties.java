@@ -3,9 +3,21 @@ package com.yushkevich.metrics.commons.config;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class KafkaProperties {
-    public String topic;
+    private String topic;
     @JsonProperty("bootstrap-server-url")
-    public String serverUrl;
+    private String serverUrl;
     @JsonProperty("bootstrap-server-port")
-    public Integer port;
+    private Integer port;
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
 }

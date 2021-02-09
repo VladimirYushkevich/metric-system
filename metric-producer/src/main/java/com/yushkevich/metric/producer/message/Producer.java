@@ -1,5 +1,6 @@
-package com.yushkevich.metric.producer;
+package com.yushkevich.metric.producer.message;
 
+import com.yushkevich.metric.producer.service.Reporter;
 import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.OSMetric;
 import com.yushkevich.metrics.commons.serde.MetricJsonSerializer;
@@ -22,13 +23,13 @@ public class Producer extends Thread {
 
     public Producer(final KafkaProperties kafkaProperties, final Reporter reporter) {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.serverUrl + ":" + kafkaProperties.port);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "MetricProducer");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MetricJsonSerializer.class.getName());
 
         producer = new KafkaProducer<>(props);
-        this.topic = kafkaProperties.topic;
+        this.topic = kafkaProperties.getTopic();
 
         this.reporter = reporter;
     }
@@ -42,7 +43,7 @@ public class Producer extends Thread {
                 reporter.getMetrics()
                         .forEach(this::send);
 
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
