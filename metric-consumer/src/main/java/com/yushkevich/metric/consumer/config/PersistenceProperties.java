@@ -25,8 +25,4 @@ public class PersistenceProperties {
     public String getPassword() {
         return password;
     }
-
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
 }

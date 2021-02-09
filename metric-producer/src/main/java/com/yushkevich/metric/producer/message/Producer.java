@@ -13,7 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
-public class Producer extends Thread {
+public class Producer implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Producer.class.getName());
 
@@ -35,18 +35,11 @@ public class Producer extends Thread {
     }
 
     @Override
-    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
-        while (true) {
-            // Send synchronously
-            try {
-                reporter.getMetrics()
-                        .forEach(this::send);
-
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            reporter.getMetrics().forEach(this::send);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

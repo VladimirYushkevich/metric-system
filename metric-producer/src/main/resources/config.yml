@@ -2,3 +2,5 @@ kafka:
   topic: json
   bootstrap-server-url: localhost
   bootstrap-server-port: 9092
+reporter:
+  poll-interval: 3

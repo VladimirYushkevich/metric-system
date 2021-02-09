@@ -1,0 +1,6 @@
+kafka:
+  topic: topic
+  bootstrap-server-url: url
+  bootstrap-server-port: 123
+reporter:
+  poll-interval: 3
