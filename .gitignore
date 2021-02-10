@@ -15,7 +15,11 @@ build
 .DS_Store
 
 # certificates
-/scripts/cert
-/metric-commons/src/main/resources/certstore/ca.pem
-/metric-commons/src/main/resources/certstore/service.cert
-/metric-commons/src/main/resources/certstore/service.key
+/scripts/certstore/ca.pem
+/scripts/certstore/service.cert
+/scripts/certstore/service.key
+# certstores (needed for local run)
+/metric-producer/src/main/resources/certstore/client.keystore.p12
+/metric-producer/src/main/resources/certstore/client.truststore.jks
+/metric-consumer/src/main/resources/certstore/client.keystore.p12
+/metric-consumer/src/main/resources/certstore/client.truststore.jks

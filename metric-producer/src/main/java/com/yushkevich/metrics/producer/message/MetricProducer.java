@@ -30,11 +30,11 @@ public class MetricProducer implements Runnable {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
             props.put("ssl.truststore.location", Objects.requireNonNull(
-                    MetricProducer.class.getClassLoader().getResource("client.truststore.jks")).getPath());
+                    MetricProducer.class.getClassLoader().getResource("certstore/client.truststore.jks")).getPath());
             props.put("ssl.truststore.password", "aiven-secret");
             props.put("ssl.keystore.type", "PKCS12");
             props.put("ssl.keystore.location", Objects.requireNonNull(
-                    MetricProducer.class.getClassLoader().getResource("client.keystore.p12")).getPath());
+                    MetricProducer.class.getClassLoader().getResource("certstore/client.keystore.p12")).getPath());
             props.put("ssl.keystore.password", "aiven-secret");
             props.put("ssl.key.password", "aiven-secret");
         }
