@@ -20,7 +20,7 @@ public class MetricRepository {
     }
 
     public void insert(OSMetric metric) throws SQLException {
-        var query = "INSERT INTO os_metric(description, name, value, created_at) VALUES( ?, ?, ?, ?)";
+        var query = "INSERT INTO os_metric(description, name, value, created_at, env) VALUES( ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
         try (Connection conn = dataSource.getConnection()) {
@@ -30,6 +30,7 @@ public class MetricRepository {
             preparedStatement.setString(2, metric.getName());
             preparedStatement.setDouble(3, metric.getValue());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(metric.getCreatedAt()));
+            preparedStatement.setString(5, metric.getEnv());
 
             preparedStatement.execute();
 
