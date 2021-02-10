@@ -5,6 +5,6 @@ kafka:
   ssl-enabled: true
 jdbc:
   driver-class: "org.postgresql.Driver"
-  jdbc-url: "jdbc:postgresql://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics"
-  user: avnadmin
-  password: wtam8e4goeas518q
+  jdbc-url: ${{secrets.DB_URL}}
+  user: ${{secrets.DB_USER}}
+  password: ${{secrets.DB_PASSWORD}}

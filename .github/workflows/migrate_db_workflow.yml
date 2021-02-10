@@ -30,7 +30,7 @@ jobs:
         working-directory: ./scripts/migrations
         run: |
           ./flyway \
-          -url=jdbc:postgresql://${{secrets.DB_HOST}}:12852/metrics?sslmode=require \
+          -url=${{secrets.DB_URL}} \
           -user=${{secrets.DB_USER}} \
           -password=${{secrets.DB_PASSWORD}} \
           -locations=filesystem:. \
