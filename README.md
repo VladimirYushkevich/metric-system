@@ -1,6 +1,10 @@
 # metric-system
 System that generates operating system metrics
 
+### Development
+For local development all infrastructure components are running in docker.
+Please `cd scripts` and follow instructions.
+
 ## How tu run locally
 Run consumer:
 ``` 

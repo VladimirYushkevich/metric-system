@@ -1,21 +1,24 @@
-package com.yushkevich.metric.consumer.message;
+package com.yushkevich.metrics.consumer.message;
 
-import com.yushkevich.metric.consumer.repository.MetricRepository;
 import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.OSMetric;
 import com.yushkevich.metrics.commons.serde.MetricJsonDeserializer;
+import com.yushkevich.metrics.consumer.repository.MetricRepository;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 public class Consumer extends Thread {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
 
     private final KafkaConsumer<Integer, OSMetric> consumer;
     private final String topic;
@@ -49,11 +52,16 @@ public class Consumer extends Thread {
     public void run() {
         consumer.subscribe(Collections.singletonList(this.topic));
         while (true) {
-            ConsumerRecords<Integer, OSMetric> records = consumer.poll(Duration.ofSeconds(1));
+            var records = consumer.poll(Duration.ofSeconds(5));
             for (ConsumerRecord<Integer, OSMetric> record : records) {
-                metricRepository.insert(record.value());
+                var metric = record.value();
+                try {
+                    metricRepository.insert(metric);
+                } catch (SQLException ex) {
+                    // ignore failed insert and allow consumer to continue
+                    LOGGER.warn("Can't insert in DB: {} ", metric, ex);
+                }
             }
         }
     }
-
 }

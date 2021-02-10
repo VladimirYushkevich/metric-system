@@ -11,5 +11,5 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.yushkevich.metric.consumer.MetricConsumerApplication'
+    mainClass = 'com.yushkevich.metrics.consumer.MetricConsumerApplication'
 }

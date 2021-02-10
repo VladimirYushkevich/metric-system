@@ -1,6 +1,6 @@
-package com.yushkevich.metric.consumer.repository;
+package com.yushkevich.metrics.consumer.repository;
 
-import com.yushkevich.metric.consumer.config.PersistenceProperties;
+import com.yushkevich.metrics.consumer.config.PersistenceProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

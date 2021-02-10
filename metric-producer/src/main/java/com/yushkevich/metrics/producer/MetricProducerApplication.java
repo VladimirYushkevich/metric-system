@@ -1,8 +1,8 @@
-package com.yushkevich.metric.producer;
+package com.yushkevich.metrics.producer;
 
-import com.yushkevich.metric.producer.config.ProducerConfig;
-import com.yushkevich.metric.producer.message.Producer;
-import com.yushkevich.metric.producer.service.Reporter;
+import com.yushkevich.metrics.producer.config.ProducerConfig;
+import com.yushkevich.metrics.producer.message.Producer;
+import com.yushkevich.metrics.producer.service.Reporter;
 import com.yushkevich.metrics.commons.config.ConfigParser;
 
 import java.util.concurrent.Executors;

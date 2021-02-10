@@ -1,7 +1,7 @@
-package com.yushkevich.metric.consumer.repository;
+package com.yushkevich.metrics.consumer.repository;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.yushkevich.metric.consumer.config.PersistenceProperties;
+import com.yushkevich.metrics.consumer.config.PersistenceProperties;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;

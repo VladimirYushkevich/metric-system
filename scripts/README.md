@@ -1,8 +1,7 @@
 ## Scripts
-This folder contains some operational scripts like DB migrations.
-And also automated instructions how to run everything locally.
+This folder contains some operational scripts like DB migrations and automated instructions how to run everything locally.
 
-### Run DB locally
+### Run DB and Kafka locally
 ```
-docker-compose up
+docker-compose up -d
 ```

@@ -8,5 +8,5 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.yushkevich.metric.producer.MetricProducerApplication'
+    mainClass = 'com.yushkevich.metrics.producer.MetricProducerApplication'
 }

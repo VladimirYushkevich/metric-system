@@ -1,4 +1,4 @@
-package com.yushkevich.metric.producer.config;
+package com.yushkevich.metrics.producer.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yushkevich.metrics.commons.config.ApplicationConfig;

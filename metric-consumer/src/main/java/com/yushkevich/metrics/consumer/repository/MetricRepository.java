@@ -1,17 +1,17 @@
-package com.yushkevich.metric.consumer.repository;
+package com.yushkevich.metrics.consumer.repository;
 
 import com.yushkevich.metrics.commons.message.OSMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MetricRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(MetricRepository.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetricRepository.class);
 
     private C3poDataSource dataSource;
 
@@ -19,7 +19,7 @@ public class MetricRepository {
         this.dataSource = dataSource;
     }
 
-    public void insert(OSMetric metric) {
+    public void insert(OSMetric metric) throws SQLException {
         var query = "INSERT INTO os_metric(description, name, value, created_at) VALUES( ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
@@ -33,9 +33,7 @@ public class MetricRepository {
 
             preparedStatement.execute();
 
-            LOGGER.info("Inserted in DB: " + metric);
-        } catch (SQLException ex) {
-            LOGGER.log(Level.WARNING, "Can't insert in DB: " + metric, ex);
+            LOGGER.info("Inserted in DB: {}", metric);
         }
     }
 }

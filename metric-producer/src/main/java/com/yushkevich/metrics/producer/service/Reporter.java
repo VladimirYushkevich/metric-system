@@ -1,4 +1,4 @@
-package com.yushkevich.metric.producer.service;
+package com.yushkevich.metrics.producer.service;
 
 import com.yushkevich.metrics.commons.message.OSMetric;
 import oshi.SystemInfo;

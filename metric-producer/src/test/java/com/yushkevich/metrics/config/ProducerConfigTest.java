@@ -1,6 +1,6 @@
-package config;
+package com.yushkevich.metrics.config;
 
-import com.yushkevich.metric.producer.config.ProducerConfig;
+import com.yushkevich.metrics.producer.config.ProducerConfig;
 import com.yushkevich.metrics.commons.config.ConfigParser;
 import org.junit.jupiter.api.Test;
 

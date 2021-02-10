@@ -1,21 +1,22 @@
-package com.yushkevich.metric.producer.message;
+package com.yushkevich.metrics.producer.message;
 
-import com.yushkevich.metric.producer.service.Reporter;
 import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.OSMetric;
 import com.yushkevich.metrics.commons.serde.MetricJsonSerializer;
+import com.yushkevich.metrics.producer.service.Reporter;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.IntegerSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
 
 public class Producer implements Runnable {
 
-    private static final Logger LOGGER = Logger.getLogger(Producer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
 
     private final KafkaProducer<Integer, OSMetric> producer;
     private final String topic;
@@ -36,20 +37,17 @@ public class Producer implements Runnable {
 
     @Override
     public void run() {
-        try {
-            reporter.getMetrics().forEach(this::send);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        reporter.getMetrics().forEach(this::send);
     }
 
     private void send(OSMetric metric) {
         try {
             producer.send(new ProducerRecord<>(topic, metric)).get();
 
-            LOGGER.info("Sent message: (" + metric + ")");
+            LOGGER.info("Sent message: {}", metric);
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            producer.close();
+            LOGGER.error("Failed to send {} message", metric, e);
         }
     }
 }
