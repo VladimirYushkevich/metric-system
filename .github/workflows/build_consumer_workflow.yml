@@ -32,6 +32,9 @@ jobs:
           jdbc.jdbc-url: ${{secrets.DB_URL}}
           jdbc.user: ${{secrets.DB_USER}}
           jdbc.password: ${{secrets.DB_PASSWORD}}
+          kafka.certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
+          kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
+          kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
 
       - name: Check after
         run: |

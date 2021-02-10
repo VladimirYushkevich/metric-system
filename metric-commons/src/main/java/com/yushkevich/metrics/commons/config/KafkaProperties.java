@@ -10,6 +10,8 @@ public class KafkaProperties {
     private Integer port;
     @JsonProperty(value = "ssl-enabled")
     private Boolean isSslEnabled;
+    @JsonProperty(value = "certstore-password")
+    private String certStorePassword;
 
     public String getTopic() {
         return topic;
@@ -25,5 +27,9 @@ public class KafkaProperties {
 
     public Boolean getSslEnabled() {
         return isSslEnabled;
+    }
+
+    public String getCertStorePassword() {
+        return certStorePassword;
     }
 }

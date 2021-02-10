@@ -3,3 +3,4 @@ kafka:
   bootstrap-server-url: url
   bootstrap-server-port: 123
   ssl-enabled: false
+  certstore-password: pass

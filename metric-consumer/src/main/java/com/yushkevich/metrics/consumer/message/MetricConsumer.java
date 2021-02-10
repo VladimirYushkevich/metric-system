@@ -36,12 +36,12 @@ public class MetricConsumer extends Thread {
             props.put("ssl.endpoint.identification.algorithm", "");
             props.put("ssl.truststore.location", Objects.requireNonNull(
                     MetricConsumer.class.getClassLoader().getResource("certstore/client.truststore.jks")).getPath());
-            props.put("ssl.truststore.password", "aiven-secret");
+            props.put("ssl.truststore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.keystore.type", "PKCS12");
             props.put("ssl.keystore.location", Objects.requireNonNull(
                     MetricConsumer.class.getClassLoader().getResource("certstore/client.keystore.p12")).getPath());
-            props.put("ssl.keystore.password", "aiven-secret");
-            props.put("ssl.key.password", "aiven-secret");
+            props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
+            props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
         }
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
