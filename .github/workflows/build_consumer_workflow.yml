@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Substitute variable
-        uses: microsoft/variable-substitution@v1
+#        uses: microsoft/variable-substitution@v1
         run: |
           pwd
 #        with:
