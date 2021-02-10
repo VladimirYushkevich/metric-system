@@ -21,7 +21,7 @@ jobs:
       - name: Check before
         run: |
           pwd
-          las -lt
+          ls -lt
           cat metric-consumer/src/main/resources/testing.yml
 
       - name: Substitute variable
