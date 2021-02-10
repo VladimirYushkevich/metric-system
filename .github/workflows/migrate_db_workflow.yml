@@ -29,7 +29,7 @@ jobs:
       - name: Migrate DB
         working-directory: ./scripts/migrations
         run: |
-          ./flyway -url="jdbc:postgres://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics?sslmode=require&user=${{secrets.DB_USER}}&password=${{secrets.DB_PASSWORD}}" \
+          ./flyway -url="jdbc:postgres:///pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics?sslmode=require&user=${{secrets.DB_USER}}&password=${{secrets.DB_PASSWORD}}" \
           -locations="filesystem:." info \
           -baselineOnMigrate="true" \
           migrate
