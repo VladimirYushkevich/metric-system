@@ -5,6 +5,6 @@ kafka:
   ssl-enabled: true
 jdbc:
   driver-class: "org.postgresql.Driver"
-  jdbc-url: ${{secrets.DB_URL}}
-  user: ${{secrets.DB_USER}}
-  password: ${{secrets.DB_PASSWORD}}
+  jdbc-url: ${{secrets.DB_URL}} # taken from CI secret
+  user: ${{secrets.DB_USER}} # taken from CI secret
+  password: ${{secrets.DB_PASSWORD}} # taken from CI secret
