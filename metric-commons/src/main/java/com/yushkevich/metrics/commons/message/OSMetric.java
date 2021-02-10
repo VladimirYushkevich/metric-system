@@ -8,6 +8,7 @@ public class OSMetric {
     private String name;
     private Double value;
     private LocalDateTime createdAt;
+    private String env;
 
     public static Builder newBuilder() {
         return new OSMetric().new Builder();
@@ -45,6 +46,14 @@ public class OSMetric {
         this.createdAt = createdAt;
     }
 
+    public String getEnv() {
+        return env;
+    }
+
+    public void setEnv(String env) {
+        this.env = env;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,12 +62,13 @@ public class OSMetric {
         return description.equals(osMetric.description) &&
                 name.equals(osMetric.name) &&
                 value.equals(osMetric.value) &&
+                env.equals(osMetric.env) &&
                 createdAt.equals(osMetric.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, name, value, createdAt);
+        return Objects.hash(description, name, value, createdAt, env);
     }
 
     @Override
@@ -68,6 +78,7 @@ public class OSMetric {
                 ", name='" + name + '\'' +
                 ", value=" + value +
                 ", createdAt=" + createdAt +
+                ", env=" + env +
                 '}';
     }
 
@@ -96,6 +107,12 @@ public class OSMetric {
 
         public Builder withCreatedAt(LocalDateTime createdAt) {
             OSMetric.this.createdAt = createdAt;
+
+            return this;
+        }
+
+        public Builder withEnv(String env) {
+            OSMetric.this.env = env;
 
             return this;
         }

@@ -5,3 +5,4 @@ kafka:
   ssl-enabled: true
 reporter:
   poll-interval: 5 # seconds
+  env: testing

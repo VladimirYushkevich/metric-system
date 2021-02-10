@@ -1,6 +1,7 @@
 package com.yushkevich.metrics.producer.service;
 
 import com.yushkevich.metrics.commons.message.OSMetric;
+import com.yushkevich.metrics.producer.config.ReporterProperties;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.HardwareAbstractionLayer;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 
 public class Reporter {
 
+    private final ReporterProperties reporterProperties;
     private final SystemInfo si;
     private final HardwareAbstractionLayer hal;
     private final CentralProcessor cpu;
@@ -18,12 +20,13 @@ public class Reporter {
 
     private long[] prevTicks;
 
-    public Reporter() {
-        si = new SystemInfo();
-        hal = si.getHardware();
-        cpu = hal.getProcessor();
-        os = si.getOperatingSystem();
-        prevTicks = new long[CentralProcessor.TickType.values().length];
+    public Reporter(ReporterProperties reporterProperties) {
+        this.reporterProperties = reporterProperties;
+        this.si = new SystemInfo();
+        this.hal = si.getHardware();
+        this.cpu = hal.getProcessor();
+        this.os = si.getOperatingSystem();
+        this.prevTicks = new long[CentralProcessor.TickType.values().length];
     }
 
     public Stream<OSMetric> getMetrics() {
@@ -33,6 +36,7 @@ public class Reporter {
                 .withName("free_memory_pct")
                 .withValue((double) memory.getAvailable() * 100 / memory.getTotal())
                 .withCreatedAt(LocalDateTime.now())
+                .withEnv(reporterProperties.getEnv())
                 .build();
 
         double cpuLoad = cpu.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
@@ -42,6 +46,7 @@ public class Reporter {
                 .withName("cpu_load_pct")
                 .withValue(cpuLoad)
                 .withCreatedAt(LocalDateTime.now())
+                .withEnv(reporterProperties.getEnv())
                 .build();
 
         var freeDiscSpacePct = os.getFileSystem().getFileStores().stream()
@@ -50,6 +55,7 @@ public class Reporter {
                         .withName("free_disc_space_pct")
                         .withValue((double) fs.getUsableSpace() * 100 / fs.getTotalSpace())
                         .withCreatedAt(LocalDateTime.now())
+                        .withEnv(reporterProperties.getEnv())
                         .build());
 
         return Stream.concat(Stream.of(freeMemoryPct, cpuLoadPct), freeDiscSpacePct);

@@ -17,6 +17,7 @@ public class ProducerConfigTest {
                 ProducerConfig.class);
 
         assertEquals(3, producerConfig.getReporterProperties().getPollInterval());
+        assertEquals("env", producerConfig.getReporterProperties().getEnv());
     }
 
     @Test

@@ -22,10 +22,11 @@ public class MetricProducerApplication {
         LOGGER.info("Resolved '{}' profile, properties taken from '{}' file", profile, configFileName);
 
         var producerConfig = new ConfigParser().readProperties(configFileName, ProducerConfig.class);
-        var reporter = new Reporter();
+        var reporterProperties = producerConfig.getReporterProperties();
+        var reporter = new Reporter(reporterProperties);
         var executor = Executors.newScheduledThreadPool(1);
         var producerTask = new MetricProducer(producerConfig.getKafkaProperties(), reporter);
-        executor.scheduleAtFixedRate(producerTask, 0, producerConfig.getReporterProperties().getPollInterval(),
+        executor.scheduleAtFixedRate(producerTask, 0, reporterProperties.getPollInterval(),
                 TimeUnit.SECONDS);
     }
 }

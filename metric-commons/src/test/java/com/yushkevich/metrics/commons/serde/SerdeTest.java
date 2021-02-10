@@ -21,6 +21,7 @@ public class SerdeTest {
                 .withName("name")
                 .withValue(1.0d)
                 .withCreatedAt(LocalDateTime.now())
+                .withEnv("env")
                 .build();
     }
 

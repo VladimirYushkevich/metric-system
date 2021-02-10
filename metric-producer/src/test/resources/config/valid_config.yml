@@ -5,3 +5,4 @@ kafka:
   ssl-enabled: false
 reporter:
   poll-interval: 3
+  env: env
