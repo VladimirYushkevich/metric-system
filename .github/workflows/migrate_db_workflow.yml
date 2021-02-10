@@ -31,9 +31,9 @@ jobs:
         run: |
           ./flyway info
           ./flyway
-          -url="jdbc:postgres://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics?sslmode=require" \
-          -user=' ${{secrets.DB_USER}} ' \
-          -password=' ${{secrets.DB_PASSWORD}} ' \
+          -url='jdbc:postgres://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics?sslmode=require' \
+          -user='${{secrets.DB_USER}}' \
+          -password='${{secrets.DB_PASSWORD}}' \
           -locations=filesystem:. \
           -baselineOnMigrate=true \
           migrate
