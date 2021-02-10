@@ -2,6 +2,7 @@ kafka:
   topic: json
   bootstrap-server-url: localhost
   bootstrap-server-port: 9092
+  ssl-enabled: false
 jdbc:
   driver-class: "org.postgresql.Driver"
   jdbc-url: "jdbc:postgresql://localhost:5432/metrics"

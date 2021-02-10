@@ -1,0 +1,7 @@
+kafka:
+  topic: test
+  bootstrap-server-url: kafka-1606798a-yushkevich-c582.aivencloud.com
+  bootstrap-server-port: 12854
+  ssl-enabled: true
+reporter:
+  poll-interval: 5 # seconds

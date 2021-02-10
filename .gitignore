@@ -13,3 +13,9 @@ build
 
 .java-version
 .DS_Store
+
+# certificates
+/scripts/cert
+/metric-commons/src/main/resources/certstore/ca.pem
+/metric-commons/src/main/resources/certstore/service.cert
+/metric-commons/src/main/resources/certstore/service.key

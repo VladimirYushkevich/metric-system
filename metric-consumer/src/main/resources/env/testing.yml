@@ -1,0 +1,10 @@
+kafka:
+  topic: test
+  bootstrap-server-url: kafka-1606798a-yushkevich-c582.aivencloud.com
+  bootstrap-server-port: 12854
+  ssl-enabled: true
+jdbc:
+  driver-class: "org.postgresql.Driver"
+  jdbc-url: "jdbc:postgresql://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics"
+  user: avnadmin
+  password: wtam8e4goeas518q

@@ -1,7 +1,7 @@
 package com.yushkevich.metrics.config;
 
-import com.yushkevich.metrics.producer.config.ProducerConfig;
 import com.yushkevich.metrics.commons.config.ConfigParser;
+import com.yushkevich.metrics.producer.config.ProducerConfig;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +13,7 @@ public class ProducerConfigTest {
 
     @Test
     void parseValidProducerConfig() {
-        var producerConfig = configParser.readProperties("yml/valid_config.yml",
+        var producerConfig = configParser.readProperties("config/valid_config.yml",
                 ProducerConfig.class);
 
         assertEquals(3, producerConfig.getReporterProperties().getPollInterval());
@@ -21,7 +21,7 @@ public class ProducerConfigTest {
 
     @Test
     void failOnNotValidReporterConfig() {
-        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("yml/not_valid_config.yml",
+        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("config/not_valid_config.yml",
                 ProducerConfig.class));
     }
 }

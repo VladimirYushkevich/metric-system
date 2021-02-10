@@ -9,40 +9,66 @@ public class OSMetric {
     private Double value;
     private LocalDateTime createdAt;
 
+    public static Builder newBuilder() {
+        return new OSMetric().new Builder();
+    }
+
     public String getDescription() {
         return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public static Builder newBuilder() {
-        return new OSMetric().new Builder();
+    public Double getValue() {
+        return value;
     }
 
     public void setValue(Double value) {
         this.value = value;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OSMetric osMetric = (OSMetric) o;
+        return description.equals(osMetric.description) &&
+                name.equals(osMetric.name) &&
+                value.equals(osMetric.value) &&
+                createdAt.equals(osMetric.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, name, value, createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return "OSMetric{" +
+                "description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", value=" + value +
+                ", createdAt=" + createdAt +
+                '}';
     }
 
     public class Builder {
@@ -78,31 +104,5 @@ public class OSMetric {
             return OSMetric.this;
         }
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OSMetric osMetric = (OSMetric) o;
-        return description.equals(osMetric.description) &&
-                name.equals(osMetric.name) &&
-                value.equals(osMetric.value) &&
-                createdAt.equals(osMetric.createdAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(description, name, value, createdAt);
-    }
-
-    @Override
-    public String toString() {
-        return "OSMetric{" +
-                "description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", value=" + value +
-                ", createdAt=" + createdAt +
-                '}';
     }
 }

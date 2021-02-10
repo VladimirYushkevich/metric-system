@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class KafkaProperties {
     private String topic;
-    @JsonProperty("bootstrap-server-url")
+    @JsonProperty(value = "bootstrap-server-url")
     private String serverUrl;
-    @JsonProperty("bootstrap-server-port")
+    @JsonProperty(value = "bootstrap-server-port")
     private Integer port;
+    @JsonProperty(value = "ssl-enabled")
+    private Boolean isSslEnabled;
 
     public String getTopic() {
         return topic;
@@ -19,5 +21,9 @@ public class KafkaProperties {
 
     public Integer getPort() {
         return port;
+    }
+
+    public Boolean getSslEnabled() {
+        return isSslEnabled;
     }
 }

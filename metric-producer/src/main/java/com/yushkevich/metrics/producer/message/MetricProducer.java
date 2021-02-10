@@ -11,20 +11,33 @@ import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public class Producer implements Runnable {
+public class MetricProducer implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetricProducer.class);
 
     private final KafkaProducer<Integer, OSMetric> producer;
     private final String topic;
     private final Reporter reporter;
 
-    public Producer(final KafkaProperties kafkaProperties, final Reporter reporter) {
+    public MetricProducer(final KafkaProperties kafkaProperties, final Reporter reporter) {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
+        if (kafkaProperties.getSslEnabled()) {
+            props.put("security.protocol", "SSL");
+            props.put("ssl.endpoint.identification.algorithm", "");
+            props.put("ssl.truststore.location", Objects.requireNonNull(
+                    MetricProducer.class.getClassLoader().getResource("client.truststore.jks")).getPath());
+            props.put("ssl.truststore.password", "aiven-secret");
+            props.put("ssl.keystore.type", "PKCS12");
+            props.put("ssl.keystore.location", Objects.requireNonNull(
+                    MetricProducer.class.getClassLoader().getResource("client.keystore.p12")).getPath());
+            props.put("ssl.keystore.password", "aiven-secret");
+            props.put("ssl.key.password", "aiven-secret");
+        }
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "MetricProducer");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MetricJsonSerializer.class.getName());

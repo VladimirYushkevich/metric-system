@@ -12,7 +12,7 @@ public class ConsumerConfigTest {
 
     @Test
     void parseValidConsumerConfig() {
-        var consumerConfig = configParser.readProperties("yml/valid_config.yml",
+        var consumerConfig = configParser.readProperties("config/valid_config.yml",
                 ConsumerConfig.class);
 
         assertEquals("driver-class", consumerConfig.getPersistenceProperties().getDriver());
@@ -23,7 +23,7 @@ public class ConsumerConfigTest {
 
     @Test
     void failOnNotValidPersistenceConfig() {
-        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("yml/not_valid_config.yml",
+        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("config/not_valid_config.yml",
                 ConsumerConfig.class));
     }
 }

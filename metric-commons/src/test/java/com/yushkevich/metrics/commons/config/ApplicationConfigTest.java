@@ -2,8 +2,7 @@ package com.yushkevich.metrics.commons.config;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ApplicationConfigTest {
 
@@ -11,17 +10,20 @@ public class ApplicationConfigTest {
 
     @Test
     void parseValidApplicationConfig() {
-        var appConfig = configParser.readProperties("yml/valid_config.yml",
+        var appConfig = configParser.readProperties("config/valid_config.yml",
                 ApplicationConfig.class);
 
-        assertEquals("topic", appConfig.getKafkaProperties().getTopic());
-        assertEquals("url", appConfig.getKafkaProperties().getServerUrl());
-        assertEquals(123, appConfig.getKafkaProperties().getPort());
+        var kafkaProperties = appConfig.getKafkaProperties();
+
+        assertEquals("topic", kafkaProperties.getTopic());
+        assertEquals("url", kafkaProperties.getServerUrl());
+        assertEquals(123, kafkaProperties.getPort());
+        assertFalse(kafkaProperties.getSslEnabled());
     }
 
     @Test
     void failOnNotValidKafkaConfig() {
-        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("yml/not_valid_config.yml",
+        assertThrows(IllegalArgumentException.class, () -> configParser.readProperties("config/not_valid_config.yml",
                 ApplicationConfig.class));
     }
 }

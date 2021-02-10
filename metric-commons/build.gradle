@@ -1,4 +1,6 @@
+apply plugin: 'java-library'
+
 dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.1'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.1'
 }

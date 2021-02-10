@@ -14,22 +14,35 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Properties;
 
-public class Consumer extends Thread {
+public class MetricConsumer extends Thread {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetricConsumer.class);
 
     private final KafkaConsumer<Integer, OSMetric> consumer;
     private final String topic;
     private final MetricRepository metricRepository;
 
-    public Consumer(final KafkaProperties kafkaProperties,
-                    final String groupId,
-                    final boolean readCommitted,
-                    MetricRepository metricRepository) {
+    public MetricConsumer(final KafkaProperties kafkaProperties,
+                          final String groupId,
+                          final boolean readCommitted,
+                          MetricRepository metricRepository) {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
+        if (kafkaProperties.getSslEnabled()) {
+            props.put("security.protocol", "SSL");
+            props.put("ssl.endpoint.identification.algorithm", "");
+            props.put("ssl.truststore.location", Objects.requireNonNull(
+                    MetricConsumer.class.getClassLoader().getResource("client.truststore.jks")).getPath());
+            props.put("ssl.truststore.password", "aiven-secret");
+            props.put("ssl.keystore.type", "PKCS12");
+            props.put("ssl.keystore.location", Objects.requireNonNull(
+                    MetricConsumer.class.getClassLoader().getResource("client.keystore.p12")).getPath());
+            props.put("ssl.keystore.password", "aiven-secret");
+            props.put("ssl.key.password", "aiven-secret");
+        }
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
