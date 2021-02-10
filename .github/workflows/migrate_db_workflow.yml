@@ -30,7 +30,7 @@ jobs:
         working-directory: ./scripts/migrations
         run: |
           ./flyway \
-          -url=jdbc:postgresql://pg-2dd2bd6f-yushkevich-c582.aivencloud.com:12852/metrics?sslmode=require \
+          -url=jdbc:postgresql://${{secrets.DB_HOST}}:12852/metrics?sslmode=require \
           -user=${{secrets.DB_USER}} \
           -password=${{secrets.DB_PASSWORD}} \
           -locations=filesystem:. \
