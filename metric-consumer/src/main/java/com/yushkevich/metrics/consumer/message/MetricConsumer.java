@@ -30,10 +30,7 @@ public class MetricConsumer extends Thread {
                           final boolean readCommitted,
                           MetricRepository metricRepository) {
         Properties props = new Properties();
-        var bootstrapUrl = kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort();
-        LOGGER.info("Connecting to '{}'", bootstrapUrl);
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapUrl);
-
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");

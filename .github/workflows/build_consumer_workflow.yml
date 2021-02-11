@@ -20,14 +20,12 @@ jobs:
 
       - name: Mooving certstore in Class Path
         run: |
-          ls -lt
-          cp -r scripts/certstore metric-consumer/src/main/resources
-          ls -lt metric-consumer/src/main/resources/certstore
+          cp -r scripts/certstore metric-consumer
 
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1
         with:
-          files: ' metric-consumer/src/main/resources/env/testing.yml'
+          files: 'metric-consumer/src/main/resources/env/testing.yml'
         env:
           jdbc.jdbc-url: ${{secrets.DB_URL}}
           jdbc.user: ${{secrets.DB_USER}}
