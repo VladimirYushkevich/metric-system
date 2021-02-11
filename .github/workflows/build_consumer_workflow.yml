@@ -38,7 +38,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew metric-consumer:build
 
-      - name: Publish to Registry
+      - name: Publish to Docker Registry
         working-directory: ./metric-consumer
         run: |
           docker image build -t metric-consumer .
