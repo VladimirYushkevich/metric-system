@@ -22,7 +22,8 @@ public class MetricConsumerApplication {
         var consumerConfig = new ConfigParser().readProperties(configFileName, ConsumerConfig.class);
         var dataSource = new C3poDataSource(consumerConfig.getPersistenceProperties());
         var metricRegistry = new MetricRepository(dataSource);
-        var consumerThread = new MetricConsumer(consumerConfig.getKafkaProperties(), "MetricConsumer", false, metricRegistry);
+        var consumerThread = new MetricConsumer(consumerConfig.getKafkaProperties(), "MetricConsumer",
+                false, metricRegistry);
         consumerThread.start();
     }
 }

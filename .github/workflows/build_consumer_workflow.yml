@@ -41,7 +41,7 @@ jobs:
       - name: Publish to Registry
         working-directory: ./metric-consumer
         run: |
-          docker image build -t watermark-java .
+          docker image build -t metric-consumer .
           echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
           docker tag metric-consumer yushkevich/metric-consumer:latest
           docker push yushkevich/metric-consumer:latest
