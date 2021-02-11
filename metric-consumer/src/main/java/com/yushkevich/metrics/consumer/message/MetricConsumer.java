@@ -32,7 +32,7 @@ public class MetricConsumer extends Thread {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
         if (kafkaProperties.getSslEnabled()) {
-            props.put("security.protocol", "SSL");
+//            props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
             props.put("ssl.truststore.location", Objects.requireNonNull(
                     getClass().getClassLoader().getResource("certstore/client.truststore.jks")).getPath());

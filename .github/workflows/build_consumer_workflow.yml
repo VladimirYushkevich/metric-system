@@ -21,6 +21,7 @@ jobs:
       - name: Mooving certstore in Class Path
         run: |
           cp -r scripts/certstore metric-consumer/src/main/resources
+          ls -lt metric-consumer/src/main/resources
 
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1
@@ -45,6 +46,7 @@ jobs:
       - name: Publish to Docker Registry
         working-directory: ./metric-consumer
         run: |
+          ls -lt
           docker image build -t metric-consumer .
           echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
           docker tag metric-consumer yushkevich/metric-consumer:latest
