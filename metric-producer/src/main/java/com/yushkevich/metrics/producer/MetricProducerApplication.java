@@ -26,6 +26,7 @@ public class MetricProducerApplication {
         var reporter = new Reporter(reporterProperties);
         var executor = Executors.newScheduledThreadPool(1);
         var producerTask = new MetricProducer(producerConfig.getKafkaProperties(), reporter);
-        executor.scheduleAtFixedRate(producerTask, 0, reporterProperties.getPollInterval(), TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(producerTask, 0, reporterProperties.getPollInterval(),
+                TimeUnit.SECONDS);
     }
 }
