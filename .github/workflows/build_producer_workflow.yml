@@ -27,9 +27,9 @@ jobs:
         run: ./gradlew metric-producer:build
 
       - name: Publish to Docker Registry
-        working-directory: ./metric-consumer
+        working-directory: ./metric-producer
         run: |
-          docker image build -t metric-consumer .
+          docker image build -t metric-producer .
           echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
-          docker tag metric-consumer yushkevich/metric-consumer:latest
-          docker push yushkevich/metric-consumer:latest
+          docker tag metric-producer yushkevich/metric-producer:latest
+          docker push yushkevich/metric-producer:latest
