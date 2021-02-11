@@ -18,12 +18,6 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v2
 
-      - name: Check before
-        run: |
-          pwd
-          ls -lt
-          cat  metric-consumer/src/main/resources/env/testing.yml
-
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1
         with:
@@ -36,10 +30,6 @@ jobs:
           kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
           kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
 
-      - name: Check after
-        run: |
-          cat  metric-consumer/src/main/resources/env/testing.yml
-
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -47,3 +37,11 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew metric-consumer:build
+
+      - name: Publish to Registry
+        working-directory: ./metric-consumer
+        run: |
+          docker image build -t watermark-java .
+          echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
+          docker tag metric-consumer yushkevich/metric-consumer:latest
+          docker push yushkevich/metric-consumer:latest
