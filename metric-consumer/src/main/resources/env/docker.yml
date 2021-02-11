@@ -1,0 +1,10 @@
+kafka:
+  topic: json
+  bootstrap-server-url: kafka
+  bootstrap-server-port: 9092
+  ssl-enabled: false
+jdbc:
+  driver-class: "org.postgresql.Driver"
+  jdbc-url: "jdbc:postgresql://postgres:5432/metrics"
+  user: user
+  password: 123

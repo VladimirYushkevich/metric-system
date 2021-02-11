@@ -1,0 +1,8 @@
+kafka:
+  topic: json
+  bootstrap-server-url: kafka
+  bootstrap-server-port: 9092
+  ssl-enabled: false
+reporter:
+  poll-interval: 5 # seconds
+  env: docker

@@ -2,6 +2,22 @@ version: '3.7'
 
 services:
 
+  metric-producer:
+    image: metric-producer
+    container_name: metric-producer
+    depends_on:
+      - kafka
+      - postgres
+    command: "--profile=docker"
+
+  metric-consumer:
+    image: metric-consumer
+    container_name: metric-consumer
+    depends_on:
+      - kafka
+      - postgres
+    command: "--profile=docker"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: kafka-zookeeper
@@ -10,29 +26,24 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
-    extra_hosts:
-      - "moby:127.0.0.1"
-      - "localhost: 127.0.0.1"
 
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     hostname: kafka-host
     ports:
-      - 9092:9092
+      - 29092:29092
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,CONNECTIONS_FROM_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONNECTIONS_FROM_HOST:PLAINTEXT
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
       KAFKA_LOG4J_LOGGERS: "kafka.controller=WARN"
-    extra_hosts:
-      - "moby:127.0.0.1"
-      - "localhost: 127.0.0.1"
 
   postgres:
     image: postgres

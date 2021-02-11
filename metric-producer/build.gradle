@@ -1,12 +1,21 @@
-plugins {
-    id 'application'
-}
+apply plugin: 'java'
+apply plugin: 'application'
 
 dependencies {
     implementation project(':metric-commons')
     implementation 'com.github.oshi:oshi-core:5.4.1'
 }
 
-application {
-    mainClass = 'com.yushkevich.metrics.producer.MetricProducerApplication'
+//application {
+//    mainClass = 'com.yushkevich.metrics.producer.MetricProducerApplication'
+//}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes(
+                'Main-Class': 'com.yushkevich.metrics.producer.MetricProducerApplication'
+        )
+    }
 }

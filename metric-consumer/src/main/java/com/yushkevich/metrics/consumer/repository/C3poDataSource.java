@@ -1,7 +1,6 @@
 package com.yushkevich.metrics.consumer.repository;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.yushkevich.metrics.consumer.MetricConsumerApplication;
 import com.yushkevich.metrics.consumer.config.PersistenceProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
