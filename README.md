@@ -19,7 +19,7 @@ I didn't try combinations like local DB and Aiven Kafka but it should work.
 
 ## How to run locally
 Producer and Consumer can be running as a docker images (yes, :) downloaded from public Registry) and fully ready to
-connect to Aiven services. 
+connect to Aiven services.  
 Run producer:
 ``` 
 docker run yushkevich/metric-producer --profile=testing
