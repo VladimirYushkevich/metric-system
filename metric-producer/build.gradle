@@ -8,6 +8,10 @@ dependencies {
     implementation 'io.confluent:kafka-avro-serializer:6.1.0'
 }
 
+application {
+    mainClass = 'com.yushkevich.metrics.producer.MetricProducerApplication'
+}
+
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }

@@ -3,5 +3,6 @@ This folder contains some operational scripts like DB migrations and automated i
 
 ### Run DB and Kafka locally
 ```
-docker-compose up -d
+cd local-setup
+./start_local.sh
 ```

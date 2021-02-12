@@ -27,6 +27,13 @@ public final class ResolverUtils {
         return String.format("env/%s.yml", profile);
     }
 
+    /**
+     * Accessing external resources from executable jar is slightly different. As a workaround we can copy resource from
+     * jar and put it in temporal file. This temporal file path can be resolved without issues.
+     *
+     * @param fromJarFileName Resource location.
+     * @return File path of temporal resources with data from jar
+     */
     public static String resolveFilePathInJar(String fromJarFileName) {
         try (var inputStream = ResolverUtils.class.getClassLoader().getResourceAsStream(fromJarFileName)) {
             var somethingFile = File.createTempFile(fromJarFileName, ".txt");
