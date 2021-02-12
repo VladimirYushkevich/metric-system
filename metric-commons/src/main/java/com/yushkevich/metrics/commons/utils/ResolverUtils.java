@@ -1,5 +1,8 @@
 package com.yushkevich.metrics.commons.utils;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,5 +25,17 @@ public final class ResolverUtils {
 
     public static String getConfigFileName(String profile) {
         return String.format("env/%s.yml", profile);
+    }
+
+    public static String resolveFilePathInJar(String fromJarFileName) {
+        try (var inputStream = ResolverUtils.class.getClassLoader().getResourceAsStream(fromJarFileName)) {
+            var somethingFile = File.createTempFile("test", ".txt");
+            if (inputStream != null) {
+                Files.copy(inputStream, somethingFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+            return somethingFile.getPath();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Can't read content from jar: " + fromJarFileName, e);
+        }
     }
 }
