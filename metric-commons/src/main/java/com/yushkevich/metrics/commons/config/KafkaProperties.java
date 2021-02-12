@@ -12,6 +12,8 @@ public class KafkaProperties {
     private Boolean isSslEnabled;
     @JsonProperty(value = "certstore-password")
     private String certStorePassword;
+    @JsonProperty(value = "schema-registry-url")
+    private String schemaRegistryUrl;
 
     public String getTopic() {
         return topic;
@@ -31,5 +33,9 @@ public class KafkaProperties {
 
     public String getCertStorePassword() {
         return certStorePassword;
+    }
+
+    public String getSchemaRegistryUrl() {
+        return schemaRegistryUrl;
     }
 }

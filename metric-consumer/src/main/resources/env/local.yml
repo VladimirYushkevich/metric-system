@@ -1,8 +1,9 @@
 kafka:
-  topic: json
+  topic: avro-os-messages
   bootstrap-server-url: localhost
   bootstrap-server-port: 29092
   ssl-enabled: false
+  schema-registry-url: http://localhost:8081
 jdbc:
   driver-class: "org.postgresql.Driver"
   jdbc-url: "jdbc:postgresql://localhost:5432/metrics"

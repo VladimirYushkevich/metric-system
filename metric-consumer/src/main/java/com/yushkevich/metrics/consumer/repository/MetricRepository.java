@@ -1,6 +1,6 @@
 package com.yushkevich.metrics.consumer.repository;
 
-import com.yushkevich.metrics.commons.message.OSMetric;
+import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,22 +19,22 @@ public class MetricRepository {
         this.dataSource = dataSource;
     }
 
-    public void insert(OSMetric metric) throws SQLException {
+    public void insert(GenericRecord genericRecord) throws SQLException {
         var query = "INSERT INTO os_metric(description, name, value, created_at, env) VALUES( ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
         try (Connection conn = dataSource.getConnection()) {
             preparedStatement = conn.prepareStatement(query);
 
-            preparedStatement.setString(1, metric.getDescription());
-            preparedStatement.setString(2, metric.getName());
-            preparedStatement.setDouble(3, metric.getValue());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(metric.getCreatedAt()));
-            preparedStatement.setString(5, metric.getEnv());
+            preparedStatement.setString(1, String.valueOf(genericRecord.get("description")));
+            preparedStatement.setString(2, String.valueOf(genericRecord.get("name")));
+            preparedStatement.setDouble(3, (Double) genericRecord.get("value"));
+            preparedStatement.setTimestamp(4, new Timestamp((Long) genericRecord.get("createdAt")));
+            preparedStatement.setString(5, String.valueOf(genericRecord.get("env")));
 
             preparedStatement.execute();
 
-            LOGGER.info("Inserted in DB: {}", metric);
+            LOGGER.info("Inserted in DB: {}", genericRecord);
         }
     }
 }

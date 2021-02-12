@@ -3,6 +3,7 @@ kafka:
   bootstrap-server-url: kafka
   bootstrap-server-port: 9092
   ssl-enabled: false
+  schema-registry-url: http://schema-registry:8081
 jdbc:
   driver-class: "org.postgresql.Driver"
   jdbc-url: "jdbc:postgresql://postgres:5432/metrics"

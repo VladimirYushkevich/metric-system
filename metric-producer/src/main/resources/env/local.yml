@@ -1,8 +1,9 @@
 kafka:
-  topic: json
+  topic: avro-os-messages
   bootstrap-server-url: localhost
   bootstrap-server-port: 29092
   ssl-enabled: false
+  schema-registry-url: http://localhost:8081
 reporter:
   poll-interval: 3 # seconds
   env: local

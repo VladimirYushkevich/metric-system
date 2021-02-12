@@ -3,6 +3,7 @@ kafka:
   bootstrap-server-url: kafka
   bootstrap-server-port: 9092
   ssl-enabled: false
+  schema-registry-url: http://schema-registry:8081
 reporter:
   poll-interval: 5 # seconds
   env: docker

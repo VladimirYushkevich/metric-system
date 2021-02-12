@@ -1,14 +1,13 @@
 package com.yushkevich.metrics.consumer.message;
 
 import com.yushkevich.metrics.commons.config.KafkaProperties;
-import com.yushkevich.metrics.commons.message.OSMetric;
-import com.yushkevich.metrics.commons.serde.MetricJsonDeserializer;
+import com.yushkevich.metrics.commons.message.Metric;
 import com.yushkevich.metrics.commons.utils.ResolverUtils;
 import com.yushkevich.metrics.consumer.repository.MetricRepository;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ public class MetricConsumer extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MetricConsumer.class);
 
-    private final KafkaConsumer<Integer, OSMetric> consumer;
+    private final KafkaConsumer<Integer, GenericRecord> consumer;
     private final String topic;
     private final MetricRepository metricRepository;
 
@@ -31,6 +30,7 @@ public class MetricConsumer extends Thread {
                           MetricRepository metricRepository) {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
+        props.put("schema.registry.url", kafkaProperties.getSchemaRegistryUrl());
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
@@ -45,8 +45,8 @@ public class MetricConsumer extends Thread {
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class.getName());
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, MetricJsonDeserializer.class.getName());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroDeserializer");
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroDeserializer");
         if (readCommitted) {
             props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         }
@@ -64,7 +64,7 @@ public class MetricConsumer extends Thread {
         consumer.subscribe(Collections.singletonList(this.topic));
         while (true) {
             var records = consumer.poll(Duration.ofSeconds(5));
-            for (ConsumerRecord<Integer, OSMetric> record : records) {
+            for (ConsumerRecord<Integer, GenericRecord> record : records) {
                 var metric = record.value();
                 try {
                     metricRepository.insert(metric);

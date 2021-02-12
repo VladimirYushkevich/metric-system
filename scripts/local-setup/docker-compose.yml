@@ -2,29 +2,13 @@ version: '3.7'
 
 services:
 
-  metric-producer:
-    image: metric-producer
-    container_name: metric-producer
-    depends_on:
-      - kafka
-      - postgres
-    command: "--profile=docker"
-
-  metric-consumer:
-    image: metric-consumer
-    container_name: metric-consumer
-    depends_on:
-      - kafka
-      - postgres
-    command: "--profile=docker"
-
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: kafka-zookeeper
     ports:
-      - 32181:32181
+      - 2181:2181
     environment:
-      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
@@ -37,13 +21,26 @@ services:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,CONNECTIONS_FROM_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONNECTIONS_FROM_HOST:PLAINTEXT
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
       KAFKA_LOG4J_LOGGERS: "kafka.controller=WARN"
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    container_name: schema-registry
+    hostname: schema-registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
 
   postgres:
     image: postgres
@@ -70,5 +67,5 @@ services:
       FLYWAY_PASSWORD: 123
       FLYWAY_URL: jdbc:postgresql://postgres:5432/metrics
     volumes:
-      - ./migrations:/flyway/sql
-    command: -connectRetries=10 -baselineOnMigrate=true migrate
+      - ../migrations:/flyway/sql
+    command: -connectRetries=3 -baselineOnMigrate=true migrate

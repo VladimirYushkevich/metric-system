@@ -4,3 +4,4 @@ kafka:
   bootstrap-server-port: 123
   ssl-enabled: false
   certstore-password: pass
+  schema-registry-url: schema-url

@@ -1,4 +1,7 @@
-apply plugin: 'java-library'
+plugins {
+    id 'com.github.davidmc24.gradle.plugin.avro' version '1.0.0'
+    id 'java-library'
+}
 
 dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'

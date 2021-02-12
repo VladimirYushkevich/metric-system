@@ -1,16 +1,14 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'application'
+}
 
 dependencies {
     implementation project(':metric-commons')
     implementation 'com.mchange:c3p0:0.9.5.5'
     implementation 'org.postgresql:postgresql:42.2.18'
+    implementation 'io.confluent:kafka-avro-serializer:6.1.0'
 
     testImplementation 'com.h2database:h2:1.4.200'
-}
-
-application {
-    mainClass = 'com.yushkevich.metrics.consumer.MetricConsumerApplication'
 }
 
 jar {

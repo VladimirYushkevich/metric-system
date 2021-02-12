@@ -1,0 +1,28 @@
+{
+  "type": "record",
+  "name": "Metric",
+  "namespace": "com.yushkevich.metrics.commons.message",
+  "fields": [
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "env",
+      "type": "string"
+    },
+    {
+      "name": "value",
+      "type": "double"
+    },
+    {
+      "name": "createdAt",
+      "logicalType": "timestamp-micros",
+      "type": "long"
+    }
+  ]
+}

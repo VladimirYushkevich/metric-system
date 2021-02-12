@@ -1,6 +1,6 @@
 package com.yushkevich.metrics.producer.service;
 
-import com.yushkevich.metrics.commons.message.OSMetric;
+import com.yushkevich.metrics.commons.message.Metric;
 import com.yushkevich.metrics.producer.config.ReporterProperties;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -8,6 +8,7 @@ import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.stream.Stream;
 
 public class Reporter {
@@ -29,33 +30,33 @@ public class Reporter {
         this.prevTicks = new long[CentralProcessor.TickType.values().length];
     }
 
-    public Stream<OSMetric> getMetrics() {
+    public Stream<Metric> getMetrics() {
         var memory = hal.getMemory();
-        var freeMemoryPct = OSMetric.newBuilder()
-                .withDescription("Free amount of memory in percents")
-                .withName("free_memory_pct")
-                .withValue((double) memory.getAvailable() * 100 / memory.getTotal())
-                .withCreatedAt(LocalDateTime.now())
-                .withEnv(reporterProperties.getEnv())
+        var freeMemoryPct = Metric.newBuilder()
+                .setDescription("Free amount of memory in percents")
+                .setName("free_memory_pct")
+                .setValue((double) memory.getAvailable() * 100 / memory.getTotal())
+                .setCreatedAt(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())
+                .setEnv(reporterProperties.getEnv())
                 .build();
 
         double cpuLoad = cpu.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
         prevTicks = cpu.getSystemCpuLoadTicks();
-        var cpuLoadPct = OSMetric.newBuilder()
-                .withDescription("CPU load")
-                .withName("cpu_load_pct")
-                .withValue(cpuLoad)
-                .withCreatedAt(LocalDateTime.now())
-                .withEnv(reporterProperties.getEnv())
+        var cpuLoadPct = Metric.newBuilder()
+                .setDescription("CPU load")
+                .setName("cpu_load_pct")
+                .setValue(cpuLoad)
+                .setCreatedAt(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())
+                .setEnv(reporterProperties.getEnv())
                 .build();
 
         var freeDiscSpacePct = os.getFileSystem().getFileStores().stream()
-                .map(fs -> OSMetric.newBuilder()
-                        .withDescription(String.format("Free amount of disc space on volume (%s) in percents", fs.getName()))
-                        .withName("free_disc_space_pct")
-                        .withValue((double) fs.getUsableSpace() * 100 / fs.getTotalSpace())
-                        .withCreatedAt(LocalDateTime.now())
-                        .withEnv(reporterProperties.getEnv())
+                .map(fs -> Metric.newBuilder()
+                        .setDescription(String.format("Free amount of disc space on volume (%s) in percents", fs.getName()))
+                        .setName("free_disc_space_pct")
+                        .setValue((double) fs.getUsableSpace() * 100 / fs.getTotalSpace())
+                        .setCreatedAt(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())
+                        .setEnv(reporterProperties.getEnv())
                         .build());
 
         return Stream.concat(Stream.of(freeMemoryPct, cpuLoadPct), freeDiscSpacePct);

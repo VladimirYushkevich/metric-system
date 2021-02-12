@@ -20,6 +20,7 @@ public class ApplicationConfigTest {
         assertEquals(123, kafkaProperties.getPort());
         assertFalse(kafkaProperties.getSslEnabled());
         assertEquals("pass", kafkaProperties.getCertStorePassword());
+        assertEquals("schema-url", kafkaProperties.getSchemaRegistryUrl());
     }
 
     @Test

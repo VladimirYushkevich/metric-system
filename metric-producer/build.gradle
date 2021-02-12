@@ -1,14 +1,12 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'application'
+}
 
 dependencies {
     implementation project(':metric-commons')
     implementation 'com.github.oshi:oshi-core:5.4.1'
+    implementation 'io.confluent:kafka-avro-serializer:6.1.0'
 }
-
-//application {
-//    mainClass = 'com.yushkevich.metrics.producer.MetricProducerApplication'
-//}
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
