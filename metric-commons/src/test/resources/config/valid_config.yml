@@ -5,3 +5,4 @@ kafka:
   ssl-enabled: false
   certstore-password: pass
   schema-registry-url: schema-url
+  schema-registry-basic-auth: auth

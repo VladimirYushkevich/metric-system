@@ -4,6 +4,8 @@ kafka:
   bootstrap-server-port: ${{secrets.KAFKA_PORT}}
   ssl-enabled: true
   certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
+  schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
+  schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
 reporter:
   poll-interval: 5 # seconds
   env: testing

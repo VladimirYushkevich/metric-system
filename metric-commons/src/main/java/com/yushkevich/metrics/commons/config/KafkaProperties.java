@@ -14,6 +14,8 @@ public class KafkaProperties {
     private String certStorePassword;
     @JsonProperty(value = "schema-registry-url")
     private String schemaRegistryUrl;
+    @JsonProperty(value = "schema-registry-basic-auth")
+    private String schemaRegistryBasicAuth;
 
     public String getTopic() {
         return topic;
@@ -37,5 +39,9 @@ public class KafkaProperties {
 
     public String getSchemaRegistryUrl() {
         return schemaRegistryUrl;
+    }
+
+    public String getSchemaRegistryBasicAuth() {
+        return schemaRegistryBasicAuth;
     }
 }

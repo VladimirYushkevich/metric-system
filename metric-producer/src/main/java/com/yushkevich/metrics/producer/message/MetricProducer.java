@@ -24,7 +24,8 @@ public class MetricProducer implements Runnable {
     public MetricProducer(final KafkaProperties kafkaProperties, final Reporter reporter) {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
-        props.put("schema.registry.url", kafkaProperties.getSchemaRegistryUrl());
+//        props.put("schema.registry.url", kafkaProperties.getSchemaRegistryUrl());
+        props.put("schema.registry.url", "https://kafka-1606798a-yushkevich-c582.aivencloud.com:12857");
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
@@ -35,6 +36,8 @@ public class MetricProducer implements Runnable {
                     ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
             props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
+            props.put("basic.auth.credentials.source", "USER_INFO");
+            props.put("basic.auth.user.info", "avnadmin:l87t9r7seq9xverv");
         }
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "MetricProducer");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroSerializer");
