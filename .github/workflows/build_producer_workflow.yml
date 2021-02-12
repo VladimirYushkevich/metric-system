@@ -20,7 +20,7 @@ jobs:
 
       - name: Mooving certstore in Class Path
         run: |
-          cp -r scripts/certstore metric-consumer/src/main/resources
+          cp -r scripts/certstore metric-producer/src/main/resources
 
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1

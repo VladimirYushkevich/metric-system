@@ -32,7 +32,8 @@ public class MetricProducer implements Runnable {
             props.put("ssl.truststore.location", ResolverUtils.resolveFilePathInJar("certstore/client.truststore.jks"));
             props.put("ssl.truststore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.keystore.type", "PKCS12");
-            props.put("ssl.keystore.location", ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
+            props.put("ssl.keystore.location",
+                    ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
             props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
         }
