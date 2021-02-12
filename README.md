@@ -15,7 +15,11 @@ following profiles:
 `local`   - Default properties.  
 `docker`  - For running in docker.   
 `testing` - For running on Aiven services.   
-I didn't try combinations like local DB and Aiven Kafka but it should work. 
+I didn't try combinations like local DB and Aiven Kafka but it should work as well.
+Github Actions are used as a CI/CD and have very simple workflows after pushing commit to master branch:  
+`Master checks for Producer` - builds producer image and publishes in [Producer Docker Registry](https://hub.docker.com/repository/docker/yushkevich/metric-producer)
+`Master checks for Consumer` - builds producer image and publishes in [Consumer Docker Registry](https://hub.docker.com/repository/docker/yushkevich/metric-consumer)
+`Master checks for DB` - Applies changes with Flyway from migration scripts.
 
 ## How to run locally
 Producer and Consumer can be running as a docker images (yes, :) downloaded from public Registry) and fully ready to
