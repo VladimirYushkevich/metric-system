@@ -1,9 +1,11 @@
 kafka:
-  topic: test
+  topic: avro-os-metrics
   bootstrap-server-url: ${{secrets.KAFKA_HOST}}
   bootstrap-server-port: ${{secrets.KAFKA_PORT}}
   ssl-enabled: true
   certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
+  schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
+  schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
 jdbc:
   driver-class: "org.postgresql.Driver"
   jdbc-url: ${{secrets.DB_URL}} # taken from CI secrets

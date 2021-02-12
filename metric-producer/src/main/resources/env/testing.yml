@@ -1,5 +1,5 @@
 kafka:
-  topic: test
+  topic: avro-os-metrics
   bootstrap-server-url: ${{secrets.KAFKA_HOST}}
   bootstrap-server-port: ${{secrets.KAFKA_PORT}}
   ssl-enabled: true

@@ -40,6 +40,8 @@ public class MetricConsumer extends Thread {
             props.put("ssl.keystore.location", ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
             props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
+            props.put("basic.auth.credentials.source", "USER_INFO");
+            props.put("basic.auth.user.info", kafkaProperties.getSchemaRegistryBasicAuth());
         }
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
