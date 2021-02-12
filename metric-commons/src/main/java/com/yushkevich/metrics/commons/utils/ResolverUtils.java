@@ -29,7 +29,7 @@ public final class ResolverUtils {
 
     public static String resolveFilePathInJar(String fromJarFileName) {
         try (var inputStream = ResolverUtils.class.getClassLoader().getResourceAsStream(fromJarFileName)) {
-            var somethingFile = File.createTempFile("test", ".txt");
+            var somethingFile = File.createTempFile(fromJarFileName, ".txt");
             if (inputStream != null) {
                 Files.copy(inputStream, somethingFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }

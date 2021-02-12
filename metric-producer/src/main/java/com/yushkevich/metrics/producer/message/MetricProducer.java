@@ -3,6 +3,7 @@ package com.yushkevich.metrics.producer.message;
 import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.OSMetric;
 import com.yushkevich.metrics.commons.serde.MetricJsonSerializer;
+import com.yushkevich.metrics.commons.utils.ResolverUtils;
 import com.yushkevich.metrics.producer.service.Reporter;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -11,7 +12,6 @@ import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -29,12 +29,10 @@ public class MetricProducer implements Runnable {
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
-            props.put("ssl.truststore.location", Objects.requireNonNull(
-                    getClass().getClassLoader().getResource("certstore/client.truststore.jks")).getPath());
+            props.put("ssl.truststore.location", ResolverUtils.resolveFilePathInJar("certstore/client.truststore.jks"));
             props.put("ssl.truststore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.keystore.type", "PKCS12");
-            props.put("ssl.keystore.location", Objects.requireNonNull(
-                    getClass().getResource("certstore/client.keystore.p12")).getPath());
+            props.put("ssl.keystore.location", ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
             props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
         }
