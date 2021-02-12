@@ -3,6 +3,7 @@ package com.yushkevich.metrics.consumer.message;
 import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.OSMetric;
 import com.yushkevich.metrics.commons.serde.MetricJsonDeserializer;
+import com.yushkevich.metrics.commons.utils.ResolverUtils;
 import com.yushkevich.metrics.consumer.repository.MetricRepository;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Properties;
 
 public class MetricConsumer extends Thread {
@@ -31,15 +31,15 @@ public class MetricConsumer extends Thread {
                           MetricRepository metricRepository) {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
+        LOGGER.info("resource: {}", getClass().getClassLoader().getResource("certstore/client.truststore.jks").getPath());
+        LOGGER.info("resource!!!: {}", ResolverUtils.resolveFilePathInJar("certstore/client.truststore.jks"));
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
-            props.put("ssl.truststore.location", Objects.requireNonNull(
-                    getClass().getClassLoader().getResource("certstore/client.truststore.jks")).getPath());
+            props.put("ssl.truststore.location", ResolverUtils.resolveFilePathInJar("certstore/client.truststore.jks"));
             props.put("ssl.truststore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.keystore.type", "PKCS12");
-            props.put("ssl.keystore.location", Objects.requireNonNull(
-                    getClass().getResource("certstore/client.keystore.p12")).getPath());
+            props.put("ssl.keystore.location", ResolverUtils.resolveFilePathInJar("certstore/client.keystore.p12"));
             props.put("ssl.keystore.password", kafkaProperties.getCertStorePassword());
             props.put("ssl.key.password", kafkaProperties.getCertStorePassword());
         }
