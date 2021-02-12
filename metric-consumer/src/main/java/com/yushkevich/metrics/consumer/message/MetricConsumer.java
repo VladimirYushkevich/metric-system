@@ -4,7 +4,7 @@ import com.yushkevich.metrics.commons.config.KafkaProperties;
 import com.yushkevich.metrics.commons.message.Metric;
 import com.yushkevich.metrics.commons.utils.ResolverUtils;
 import com.yushkevich.metrics.consumer.repository.MetricRepository;
-import org.apache.avro.generic.GenericRecord;
+import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -20,7 +20,7 @@ public class MetricConsumer extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MetricConsumer.class);
 
-    private final KafkaConsumer<Integer, GenericRecord> consumer;
+    private final KafkaConsumer<Integer, Metric> consumer;
     private final String topic;
     private final MetricRepository metricRepository;
 
@@ -49,6 +49,7 @@ public class MetricConsumer extends Thread {
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroDeserializer");
+        props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "true");
         if (readCommitted) {
             props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         }
@@ -66,7 +67,7 @@ public class MetricConsumer extends Thread {
         consumer.subscribe(Collections.singletonList(this.topic));
         while (true) {
             var records = consumer.poll(Duration.ofSeconds(5));
-            for (ConsumerRecord<Integer, GenericRecord> record : records) {
+            for (ConsumerRecord<Integer, Metric> record : records) {
                 var metric = record.value();
                 try {
                     metricRepository.insert(metric);
