@@ -22,6 +22,7 @@ jobs:
         working-directory: ./metric-consumer
         run: |
           cd src/main/resources
+          mkdir certstore && cd certstore
           echo '${{secrets.SERVICE_KEY}}' > service.key
           echo '${{secrets.SERVICE_CERT}}' > service.cert
           echo '${{secrets.CA_PEM}}' > ca.pem
