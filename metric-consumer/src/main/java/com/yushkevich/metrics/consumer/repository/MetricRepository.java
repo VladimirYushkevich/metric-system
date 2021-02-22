@@ -1,7 +1,6 @@
 package com.yushkevich.metrics.consumer.repository;
 
 import com.yushkevich.metrics.commons.message.Metric;
-import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +22,10 @@ public class MetricRepository {
     public void insert(Metric metric) throws SQLException {
         var query = "INSERT INTO os_metric(description, name, value, created_at, env) VALUES( ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement;
-        try (Connection conn = dataSource.getConnection()) {
-            preparedStatement = conn.prepareStatement(query);
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
+        ) {
 
             preparedStatement.setString(1, metric.getDescription());
             preparedStatement.setString(2, metric.getName());
