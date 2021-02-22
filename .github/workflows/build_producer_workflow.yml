@@ -26,9 +26,11 @@ jobs:
           echo '${{secrets.SERVICE_CERT}}' > service.cert
           echo '${{secrets.CA_PEM}}' > ca.pem
           ls -lt
-          cat ca.pem
           openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key -password pass:'${{secrets.KAFKA_CERT_PASSWORD}}'
-          keytool -import -file ca.pem -alias CA -keystore client.truststore.jks
+          keytool -import -file ca.pem -alias CA -keystore client.truststore.jks -storepass '${{secrets.KAFKA_CERT_PASSWORD}}' -noprompt
+          rm service.key
+          rm service.cert
+          rm ca.pem
           ls -lt
 
       - name: Substitute variable
