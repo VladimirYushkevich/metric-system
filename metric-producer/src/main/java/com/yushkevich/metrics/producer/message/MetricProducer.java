@@ -42,15 +42,15 @@ public class MetricProducer implements Runnable {
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroSerializer");
         // retries
-        //Only one in-flight messages per Kafka broker connection
+        // Only one in-flight messages per Kafka broker connection
         // - max.in.flight.requests.per.connection (default 5)
         props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION,
                 1);
-        //Set the number of retries - retries
+        // Set the number of retries - retries
         props.put(ProducerConfig.RETRIES_CONFIG, 3);
-        //Request timeout - request.timeout.ms
+        // Request timeout - request.timeout.ms
         props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 15_000);
-        //Only retry after one second.
+        // Only retry after one second.
         props.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, 1_000);
 
         producer = new KafkaProducer<>(props);

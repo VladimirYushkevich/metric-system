@@ -21,10 +21,9 @@ jobs:
       - name: Build certstore
         working-directory: ./metric-producer
         run: |
-          ls -lt
           cd src/main/resources
-          openssl pkcs12 -export -inkey ${{secrets.SERVICE_KEY}} -in ${{secrets.SERVICE_CERT}} -out client.keystore.p12 -name service_key -p ${{secrets.KAFKA_CERT_PASSWORD}}
-          keytool -import -file ${{secrets.CA_PEM}} -alias CA -keystore client.truststore.jks
+          openssl pkcs12 -export -inkey '${{secrets.SERVICE_KEY}}' -in '${{secrets.SERVICE_CERT}}' -out client.keystore.p12 -name service_key -p '${{secrets.KAFKA_CERT_PASSWORD}}'
+          keytool -import -file '${{secrets.CA_PEM}}' -alias CA -keystore client.truststore.jks
           ls -lt
 
       - name: Substitute variable
