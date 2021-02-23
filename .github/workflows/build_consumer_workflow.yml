@@ -60,17 +60,12 @@ jobs:
           java-version: 11
 
       - name: Build with Gradle
-#        run: ./gradlew metric-consumer:build
-        run: |
-          pwd
-          cd metric-consumer/src/main/resources/certstore
-          ls -lt
-          cat service.key
+        run: ./gradlew metric-consumer:build
 
-#      - name: Publish to Docker Registry
-#        working-directory: ./metric-consumer
-#        run: |
-#          docker image build -t metric-consumer .
-#          echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
-#          docker tag metric-consumer yushkevich/metric-consumer:latest
-#          docker push yushkevich/metric-consumer:latest
+      - name: Publish to Docker Registry
+        working-directory: ./metric-consumer
+        run: |
+          docker image build -t metric-consumer .
+          echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
+          docker tag metric-consumer yushkevich/metric-consumer:latest
+          docker push yushkevich/metric-consumer:latest
