@@ -25,9 +25,10 @@ jobs:
           mkdir certstore && cd certstore
           echo "$SERVICE_KEY"
           echo "$SERVICE_KEY" > service.key
-          echo $SERVICE_CERT >> service.cert
-          echo $CA_PEM >> ca.pem
-          cat service.key
+          echo "$SERVICE_CERT" > service.cert
+          echo "$CA_PEM" >> ca.pem
+          openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key -password pass:'${{secrets.KAFKA_CERT_PASSWORD}}'
+          keytool -import -file ca.pem -alias CA -keystore client.truststore.jks -storepass '${{secrets.KAFKA_CERT_PASSWORD}}' -noprompt
         env:
           SERVICE_KEY: ${{secrets.SERVICE_KEY}}
           SERVICE_CERT: ${{secrets.SERVICE_CERT}}
@@ -39,28 +40,33 @@ jobs:
           name: SERVICE_KEY
           path: certstore/service.key
 
-#      - name: Substitute variable
-#        uses: microsoft/variable-substitution@v1
-#        with:
-#          files: 'metric-consumer/src/main/resources/env/testing.yml'
-#        env:
-#          jdbc.jdbc-url: ${{secrets.DB_URL}}
-#          jdbc.user: ${{secrets.DB_USER}}
-#          jdbc.password: ${{secrets.DB_PASSWORD}}
-#          kafka.certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
-#          kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
-#          kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
-#          kafka.schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
-#          kafka.schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
-#
-#      - name: Set up JDK 11
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 11
-#
-#      - name: Build with Gradle
+      - name: Substitute variable
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: 'metric-consumer/src/main/resources/env/testing.yml'
+        env:
+          jdbc.jdbc-url: ${{secrets.DB_URL}}
+          jdbc.user: ${{secrets.DB_USER}}
+          jdbc.password: ${{secrets.DB_PASSWORD}}
+          kafka.certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
+          kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
+          kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
+          kafka.schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
+          kafka.schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build with Gradle
 #        run: ./gradlew metric-consumer:build
-#
+        run: |
+          pwd
+          cd src/main/resources/certstore
+          ls -lt
+          cat service.key
+
 #      - name: Publish to Docker Registry
 #        working-directory: ./metric-consumer
 #        run: |
