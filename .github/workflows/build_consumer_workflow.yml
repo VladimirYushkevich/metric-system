@@ -27,8 +27,8 @@ jobs:
           echo $SERVICE_KEY > service.key
           echo $SERVICE_CERT > service.cert
           echo $CA_PEM > ca.pem
-          openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key -password pass:'${{secrets.KAFKA_CERT_PASSWORD}}'
-          keytool -import -file ca.pem -alias CA -keystore client.truststore.jks -storepass '${{secrets.KAFKA_CERT_PASSWORD}}' -noprompt
+#          openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key -password pass:'${{secrets.KAFKA_CERT_PASSWORD}}'
+#          keytool -import -file ca.pem -alias CA -keystore client.truststore.jks -storepass '${{secrets.KAFKA_CERT_PASSWORD}}' -noprompt
           cat service.key
           rm service.key
           rm service.cert
