@@ -36,7 +36,7 @@ jobs:
         env:
           SERVICE_KEY: ${{secrets.SERVICE_KEY}}
           SERVICE_CERT: ${{secrets.SERVICE_CERT}}
-          CA_PEM: {{secrets.CA_PEM}}
+          CA_PEM: ${{secrets.CA_PEM}}
 
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1
