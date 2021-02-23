@@ -63,7 +63,7 @@ jobs:
 #        run: ./gradlew metric-consumer:build
         run: |
           pwd
-          cd src/main/resources/certstore
+#          cd src/main/resources/certstore
           ls -lt
           cat service.key
 
