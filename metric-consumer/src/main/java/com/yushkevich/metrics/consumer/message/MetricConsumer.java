@@ -11,10 +11,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Collections;
@@ -35,20 +31,6 @@ public class MetricConsumer extends Thread {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServerUrl() + ":" + kafkaProperties.getPort());
         props.put("schema.registry.url", kafkaProperties.getSchemaRegistryUrl());
-        try (BufferedReader br = new BufferedReader(new FileReader(ResolverUtils.resolveFilePathInJar("certstore/service.key")))) {
-            String line = "";
-            while (true) {
-                try {
-                    if (!((line = br.readLine()) != null)) break;
-                } catch (IOException e) {
-                }
-                System.out.println(line);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if (kafkaProperties.getSslEnabled()) {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
