@@ -23,8 +23,8 @@ jobs:
         run: |
           cd src/main/resources
           mkdir certstore && cd certstore
-          echo $SERVICE_KEY
-          echo $SERVICE_KEY >> service.key
+          echo "$SERVICE_KEY"
+          echo "$SERVICE_KEY" > service.key
           echo $SERVICE_CERT >> service.cert
           echo $CA_PEM >> ca.pem
           cat service.key
