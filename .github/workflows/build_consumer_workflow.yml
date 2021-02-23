@@ -24,44 +24,47 @@ jobs:
           cd src/main/resources
           mkdir certstore && cd certstore
           echo $SERVICE_KEY
-          echo $SERVICE_KEY > service.key
-          echo $SERVICE_CERT > service.cert
-          echo $CA_PEM > ca.pem
+          echo $SERVICE_KEY >> service.key
+          echo $SERVICE_CERT >> service.cert
+          echo $CA_PEM >> ca.pem
           cat service.key
-          rm service.key
-          rm service.cert
-          rm ca.pem
         env:
           SERVICE_KEY: ${{secrets.SERVICE_KEY}}
           SERVICE_CERT: ${{secrets.SERVICE_CERT}}
           CA_PEM: ${{secrets.CA_PEM}}
 
-      - name: Substitute variable
-        uses: microsoft/variable-substitution@v1
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: 'metric-consumer/src/main/resources/env/testing.yml'
-        env:
-          jdbc.jdbc-url: ${{secrets.DB_URL}}
-          jdbc.user: ${{secrets.DB_USER}}
-          jdbc.password: ${{secrets.DB_PASSWORD}}
-          kafka.certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
-          kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
-          kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
-          kafka.schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
-          kafka.schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
+          name: SERVICE_KEY
+          path: service.key
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-
-      - name: Build with Gradle
-        run: ./gradlew metric-consumer:build
-
-      - name: Publish to Docker Registry
-        working-directory: ./metric-consumer
-        run: |
-          docker image build -t metric-consumer .
-          echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
-          docker tag metric-consumer yushkevich/metric-consumer:latest
-          docker push yushkevich/metric-consumer:latest
+#      - name: Substitute variable
+#        uses: microsoft/variable-substitution@v1
+#        with:
+#          files: 'metric-consumer/src/main/resources/env/testing.yml'
+#        env:
+#          jdbc.jdbc-url: ${{secrets.DB_URL}}
+#          jdbc.user: ${{secrets.DB_USER}}
+#          jdbc.password: ${{secrets.DB_PASSWORD}}
+#          kafka.certstore-password: ${{secrets.KAFKA_CERT_PASSWORD}}
+#          kafka.bootstrap-server-url: ${{secrets.KAFKA_HOST}}
+#          kafka.bootstrap-server-port: ${{secrets.KAFKA_PORT}}
+#          kafka.schema-registry-url: ${{secrets.KAFKA_SCHEMA_REGISTRY_URL}}
+#          kafka.schema-registry-basic-auth: ${{secrets.KAFKA_SCHEMA_REGISTRY_AUTH}}
+#
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#
+#      - name: Build with Gradle
+#        run: ./gradlew metric-consumer:build
+#
+#      - name: Publish to Docker Registry
+#        working-directory: ./metric-consumer
+#        run: |
+#          docker image build -t metric-consumer .
+#          echo '${{secrets.DOCKER_PRIVATE_PASSWORD}}' | docker login --username=yushkevich --password-stdin
+#          docker tag metric-consumer yushkevich/metric-consumer:latest
+#          docker push yushkevich/metric-consumer:latest
