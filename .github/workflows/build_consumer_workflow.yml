@@ -35,12 +35,6 @@ jobs:
           SERVICE_CERT: ${{secrets.SERVICE_CERT}}
           CA_PEM: ${{secrets.CA_PEM}}
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: SERVICE_KEY
-          path: certstore/service.key
-
       - name: Substitute variable
         uses: microsoft/variable-substitution@v1
         with:
